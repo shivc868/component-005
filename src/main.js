@@ -163,6 +163,8 @@ const BRANDS = [
 const CFG = {
   wheelSpeed: 0.0013, // wheel px -> slide units
   wheelStepMax: 1.7, // clamp on a single wheel event
+  maxPerGesture: 1, // max slides one continuous gesture can travel (tames trackpad flings)
+  gestureGap: 60, // ms without a wheel event that ends a gesture
   lerp: 0.1, // free-scroll smoothing per frame
   snapDelay: 100, // ms of idle before the snap fires
   snapDuration: 1, // eased settle onto a brand
@@ -194,6 +196,8 @@ class BrandSlider {
   #prevDisp = 0;
   #active = 0;
   #vel = 0; // smoothed input velocity, biases the snap
+  #lastWheel = 0; // timestamp of the last wheel event, to split gestures
+  #gestureDelta = 0; // slides travelled so far in the current gesture
   #snapId = 0;
   #resizeId = 0;
   #snapping = false;
@@ -635,12 +639,29 @@ class BrandSlider {
   #onWheel = (e) => {
     if (this.#sheetOpen) return; // let the list scroll natively
     e.preventDefault();
-    this.#cancelSnap();
-    const dd = clamp(
+
+    // a mouse fires one notch per gesture; a trackpad fires a dense stream plus
+    // a momentum tail. Reset the per-gesture budget only after a real pause, so
+    // one continuous trackpad flick moves a single slide instead of several.
+    const now = performance.now();
+    if (now - this.#lastWheel > CFG.gestureGap) this.#gestureDelta = 0;
+    this.#lastWheel = now;
+
+    const raw = clamp(
       this.#wheelDelta(e) * CFG.wheelSpeed,
       -CFG.wheelStepMax,
       CFG.wheelStepMax,
     );
+    const capped = clamp(
+      this.#gestureDelta + raw,
+      -CFG.maxPerGesture,
+      CFG.maxPerGesture,
+    );
+    const dd = capped - this.#gestureDelta;
+    this.#gestureDelta = capped;
+    if (dd === 0) return; // budget spent — swallow the momentum tail so the snap lands
+
+    this.#cancelSnap();
     this.#pos = bound(this.#pos + dd);
     this.#vel = this.#vel * 0.7 + dd * 0.3;
     this.#scheduleSnap();
