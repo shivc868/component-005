@@ -164,13 +164,13 @@ const CFG = {
   wheelSpeed: 0.0013, // wheel px -> slide units
   wheelStepMax: 1.7, // clamp on a single wheel event
   lerp: 0.1, // free-scroll smoothing per frame
-  snapDelay: 140, // ms of idle before the snap fires
+  snapDelay: 100, // ms of idle before the snap fires
   snapDuration: 1, // eased settle onto a brand
-  snapEase: "expo.out",
-  velocityBias: 0.14, // flick influence on the 50% snap
+  snapEase: "power1.out",
+  velocityBias: 0.1, // flick influence on the 50% snap
   overscroll: 0.12, // rubber-band past the first/last brand
   parallax: 0.36, // image drift vs its slide
-  imgQuality: 80,
+  imgQuality: 100,
   textSeconds: 0.62,
   exitSeconds: 0.26,
 };
