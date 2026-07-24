@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Raleway:wght@400..600&family=Manrope:wght@400..600&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>component-003</title>
+  </head>
+  <body>
+    <div id="mfa-app">
+      <!--
+        BRAND SLIDER — copy this <section> plus src/style.css into your project.
+        The first brand is rendered inline so the panel never flashes empty;
+        main.js takes over from there and drives every other slide from its
+        BRANDS array. Nothing outside #mfa-root belongs to the component.
+      -->
+      <section
+        class="mfa-brands"
+        id="mfa-root"
+        aria-roledescription="carousel"
+        aria-label="Our brands"
+      >
+        <!-- one full-viewport photo layer per brand is generated here by main.js -->
+        <div class="mfa-brands__stage" data-mfa="stage"></div>
+
+        <div class="mfa-brands__scrim" aria-hidden="true"></div>
+
+        <!-- announces slide changes to screen readers -->
+        <p class="mfa-brands__sr" data-mfa="live" aria-live="polite"></p>
+
+        <div class="mfa-brands__ui">
+          <article class="mfa-brands__card">
+            <div class="mfa-brands__mark">
+              <span class="mfa-brands__wordmark" data-mfa="wordmark"
+                >Meridian<i>.</i></span
+              >
+            </div>
+
+            <div class="mfa-brands__body">
+              <p class="mfa-brands__tags">
+                <span class="mfa-brands__tag" data-mfa="tagline"
+                  >It starts outside.</span
+                >
+                <span class="mfa-brands__tag">
+                  <span data-mfa="claim">The trail is for</span>
+                  <mark class="mfa-brands__pill" data-mfa="highlight"
+                    >everyone</mark
+                  >
+                </span>
+              </p>
+
+              <h2 class="mfa-brands__headline" data-mfa="headline">
+                We exist to share the simple power of being outside.
+              </h2>
+
+              <div class="mfa-brands__more" data-mfa="more">
+                <p class="mfa-brands__about" data-mfa="about">
+                  Twenty-two years of footwear built for the ground between the
+                  trailhead and the summit — tested by the people who spend
+                  every weekend out there.
+                </p>
+              </div>
+
+              <!--
+                Each pill carries the SAME icon twice — a hidden lead copy on
+                the left and a visible trail copy on the right. On hover the
+                trail slides out to the right while the lead eases in from the
+                left, so the glyph appears to travel across the button.
+              -->
+              <div class="mfa-brands__actions">
+                <button
+                  class="mfa-brands__btn"
+                  type="button"
+                  data-mfa="learn"
+                  aria-expanded="false"
+                >
+                  <span class="mfa-brands__btn-ico mfa-brands__btn-ico--lead" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                      <path d="M5 12h14" />
+                      <path class="mfa-brands__icon-v" d="M12 5v14" />
+                    </svg>
+                  </span>
+                  <span class="mfa-brands__btn-txt" data-mfa="learn-label">Learn more</span>
+                  <span class="mfa-brands__btn-ico mfa-brands__btn-ico--trail" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                      <path d="M5 12h14" />
+                      <path class="mfa-brands__icon-v" d="M12 5v14" />
+                    </svg>
+                  </span>
+                </button>
+
+                <a
+                  class="mfa-brands__btn"
+                  data-mfa="shop"
+                  href="#shop"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span class="mfa-brands__btn-ico mfa-brands__btn-ico--lead" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 4h6v6M20 4l-8 8" />
+                      <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+                    </svg>
+                  </span>
+                  <span class="mfa-brands__btn-txt">Shop Now</span>
+                  <span class="mfa-brands__btn-ico mfa-brands__btn-ico--trail" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 4h6v6M20 4l-8 8" />
+                      <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+                    </svg>
+                  </span>
+                </a>
+
+                <a
+                  class="mfa-brands__btn"
+                  data-mfa="jobs"
+                  href="#careers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span class="mfa-brands__btn-ico mfa-brands__btn-ico--lead" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 4h6v6M20 4l-8 8" />
+                      <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+                    </svg>
+                  </span>
+                  <span class="mfa-brands__btn-txt">Job Opportunities</span>
+                  <span class="mfa-brands__btn-ico mfa-brands__btn-ico--trail" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 4h6v6M20 4l-8 8" />
+                      <path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <div class="mfa-brands__bar">
+            <div class="mfa-brands__rail">
+              <button
+                class="mfa-brands__seg mfa-brands__seg--all"
+                type="button"
+                data-mfa="viewall"
+                aria-expanded="false"
+              >
+                <span class="mfa-brands__seg-ico" aria-hidden="true">
+                  <svg
+                    class="mfa-brands__icon mfa-brands__ico-list"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <rect x="4" y="4.5" width="16" height="6" rx="3" />
+                    <rect x="4" y="13.5" width="16" height="6" rx="3" />
+                  </svg>
+                  <svg
+                    class="mfa-brands__icon mfa-brands__ico-close"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                  >
+                    <path d="M6 6l12 12M18 6L6 18" />
+                  </svg>
+                </span>
+                <span data-mfa="viewall-label">View All</span>
+              </button>
+
+              <span class="mfa-brands__seg mfa-brands__seg--name">
+                <span data-mfa="name">Meridian</span>
+              </span>
+
+              <span class="mfa-brands__seg mfa-brands__seg--count">
+                <span class="mfa-brands__odometer">
+                  <span data-mfa="current">01</span>
+                </span>
+                <span class="mfa-brands__slash">/</span>
+                <span data-mfa="total">11</span>
+              </span>
+            </div>
+
+            <div class="mfa-brands__nav">
+              <button
+                class="mfa-brands__arrow mfa-brands__arrow--up"
+                type="button"
+                data-mfa="prev"
+                aria-label="Previous brand"
+              >
+                <span class="mfa-brands__arrow-loop" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 19V5M5 12l7-7 7 7" />
+                  </svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 19V5M5 12l7-7 7 7" />
+                  </svg>
+                </span>
+              </button>
+              <button
+                class="mfa-brands__arrow mfa-brands__arrow--down"
+                type="button"
+                data-mfa="next"
+                aria-label="Next brand"
+              >
+                <span class="mfa-brands__arrow-loop" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 5v14M19 12l-7 7-7-7" />
+                  </svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 5v14M19 12l-7 7-7-7" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!--
+          "View All" list — rows are generated from the BRANDS array. It sits
+          above the control bar (which stays visible, its View All toggling to
+          Close) and covers the info card while open.
+        -->
+        <div
+          class="mfa-brands__sheet"
+          data-mfa="sheet"
+          role="dialog"
+          aria-modal="true"
+          aria-label="All brands"
+          hidden
+        >
+          <div class="mfa-brands__list" data-mfa="list"></div>
+        </div>
+      </section>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

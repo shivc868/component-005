@@ -1,0 +1,752 @@
+/* ==========================================================================
+   BRAND SLIDER — this is the file you copy into your project
+   --------------------------------------------------------------------------
+   Every class, state class and design token is namespaced with `mfa-` /
+   `--mfa-` and lives under `.mfa-brands`, so nothing here can reach the
+   styles already on your site (and nothing on your site reaches in).
+   The showcase page shell lives in demo.css and should NOT be copied.
+   ========================================================================== */
+
+.mfa-brands {
+  /* ---- theme: charcoal glass over full-bleed photography ---- */
+  --mfa-brands-ink: #f4f2ee; /* primary text */
+  --mfa-brands-ink-soft: rgba(244, 242, 238, 0.66); /* eyebrows, meta */
+  --mfa-brands-ink-mute: rgba(244, 242, 238, 0.4); /* separators, idle icons */
+  --mfa-brands-glass: rgba(18, 18, 20, 0.42); /* panel fill */
+  --mfa-brands-glass-hi: rgba(255, 255, 255, 0.1); /* buttons, chips */
+  --mfa-brands-glass-hover: rgba(255, 255, 255, 0.19);
+  --mfa-brands-btn-hover: var(--mfa-brands-ink); /* white hover fill (buttons + arrows) */
+  --mfa-brands-btn-hover-ink: #14110f; /* text/icon color on the white fill */
+  --mfa-brands-line: rgba(255, 255, 255, 0.14); /* hairlines */
+  --mfa-brands-accent: #f4f2ee; /* progress + focus ring */
+  --mfa-brands-shade: rgba(0, 0, 0, 0.62); /* bottom scrim */
+
+  --mfa-brands-blur: 20px;
+  --mfa-brands-radius: 16px;
+  --mfa-brands-radius-sm: 10px;
+  --mfa-brands-panel: 764px; /* card + bar max width */
+  --mfa-brands-mark-w: 228px; /* logo cell width */
+  --mfa-brands-pad: 24px; /* gap from the viewport edges */
+
+  --mfa-brands-heading: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --mfa-brands-display: "Bricolage Grotesque", "Segoe UI", system-ui,
+    sans-serif;
+  --mfa-brands-mono: "Space Mono", Consolas, ui-monospace, monospace;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  height: 100svh;
+  min-height: 600px;
+  color: var(--mfa-brands-ink);
+  background: #101012;
+  font-family: var(--mfa-brands-heading);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mfa-brands *,
+.mfa-brands *::before,
+.mfa-brands *::after {
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Photo stage — one full-viewport slide per brand, absolutely stacked. main.js
+   translates each slide by its wrapped distance from the scroll position, and
+   drifts the image inside it (parallax). Slides overscan vertically so the
+   parallax offset never reveals an edge.
+   -------------------------------------------------------------------------- */
+
+.mfa-brands__stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.mfa-brands__slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  visibility: hidden; /* main.js reveals only the on-screen slides */
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.mfa-brands__img {
+  position: absolute;
+  left: 0;
+  top: -13%; /* overscan top + bottom absorbs the parallax drift */
+  width: 100%;
+  height: 126%;
+  object-fit: cover;
+  display: block;
+  will-change: transform;
+}
+
+.mfa-brands__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to top,
+      var(--mfa-brands-shade) 0%,
+      rgba(0, 0, 0, 0.28) 34%,
+      rgba(0, 0, 0, 0) 62%
+    ),
+    radial-gradient(
+      120% 90% at 50% 0%,
+      rgba(0, 0, 0, 0.34) 0%,
+      rgba(0, 0, 0, 0) 60%
+    );
+}
+
+/* visually hidden, still announced */
+.mfa-brands__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   UI column — card above, control bar below, both bottom-anchored
+   -------------------------------------------------------------------------- */
+
+.mfa-brands__ui {
+  position: absolute;
+  inset: 0;
+  z-index: 3; /* above the View All sheet (z-2) so the bar stays live */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: var(--mfa-brands-pad);
+  pointer-events: none; /* let the photo breathe; children opt back in */
+}
+
+.mfa-brands__ui > * {
+  pointer-events: auto;
+}
+
+/* ---- card ---- */
+
+.mfa-brands__card {
+  display: grid;
+  grid-template-columns: var(--mfa-brands-mark-w) 1fr;
+  width: min(var(--mfa-brands-panel), 100%);
+  border: 1px solid var(--mfa-brands-line);
+  border-radius: var(--mfa-brands-radius);
+  background: var(--mfa-brands-glass);
+  backdrop-filter: blur(var(--mfa-brands-blur)) saturate(1.35);
+  -webkit-backdrop-filter: blur(var(--mfa-brands-blur)) saturate(1.35);
+  box-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+}
+
+.mfa-brands__mark {
+  display: grid;
+  place-items: center;
+  padding: 26px 20px;
+  border-right: 1px solid var(--mfa-brands-line);
+}
+
+.mfa-brands__wordmark {
+  font-family: var(--mfa-brands-display);
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.1;
+  white-space: nowrap;
+  will-change: transform, opacity, filter;
+}
+
+.mfa-brands__wordmark i {
+  font-style: normal;
+  color: var(--mfa-brands-ink-mute);
+}
+
+.mfa-brands__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 24px 22px;
+  min-width: 0; /* let long headlines wrap instead of stretching the grid */
+}
+
+.mfa-brands__tags {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+  font-family: var(--mfa-brands-mono);
+  font-size: 11px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--mfa-brands-ink-soft);
+}
+
+.mfa-brands__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.mfa-brands__pill {
+  padding: 2px 6px 3px;
+  border-radius: 4px;
+  background: var(--mfa-brands-glass-hover);
+  color: var(--mfa-brands-ink);
+}
+
+.mfa-brands__headline {
+  margin: 0;
+  font-size: clamp(19px, 1.45vw, 26px);
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -0.014em;
+  text-wrap: balance;
+}
+
+/* collapsible "Learn more" copy — height is animated, so keep it clipped */
+.mfa-brands__more {
+  overflow: hidden;
+  height: 0;
+}
+
+.mfa-brands__about {
+  margin: 0 0 2px;
+  padding-top: 2px;
+  max-width: 56ch;
+  font-size: 15px;
+  line-height: 1.62;
+  color: rgba(244, 242, 238, 0.86);
+}
+
+.mfa-brands__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+/* Rest: label + trailing icon, clean and left-aligned. Hover: the label slides
+   right to open a gap, the lead icon (parked absolutely on the left) eases into
+   it, the trailing icon exits right, and the fill brightens. */
+.mfa-brands__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+  padding: 0 16px;
+  border: 1px solid var(--mfa-brands-line);
+  border-radius: 999px;
+  background: var(--mfa-brands-glass-hi);
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.25s ease;
+}
+
+.mfa-brands__btn:hover {
+  background: var(--mfa-brands-btn-hover);
+  border-color: var(--mfa-brands-btn-hover);
+  color: var(--mfa-brands-btn-hover-ink);
+  transform: translateY(-1px);
+}
+
+/* label shifts right on hover to clear room for the incoming left icon */
+.mfa-brands__btn-txt {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mfa-brands__btn:hover .mfa-brands__btn-txt {
+  transform: translateX(22px);
+}
+
+.mfa-brands__btn-ico {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease;
+}
+
+.mfa-brands__btn-ico svg {
+  width: 16px;
+  height: 16px;
+  opacity: 0.85;
+}
+
+.mfa-brands__btn:hover .mfa-brands__btn-ico svg {
+  opacity: 1;
+}
+
+/* trail: visible on the right at rest, slides out to the right on hover */
+.mfa-brands__btn-ico--trail {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mfa-brands__btn:hover .mfa-brands__btn-ico--trail {
+  opacity: 0;
+  transform: translateX(14px);
+}
+
+/* lead: pinned to the left padding, out of flow so it never shifts the label;
+   parked just off-left at rest, eases in as the label makes room */
+.mfa-brands__btn-ico--lead {
+  position: absolute;
+  left: 16px;
+  top: 0;
+  bottom: 0;
+  height: auto;
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.mfa-brands__btn:hover .mfa-brands__btn-ico--lead {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* the + collapses to a — while the panel is open (Learn more -> Close) */
+.mfa-brands__icon-v {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease;
+}
+
+.mfa-brands__btn[aria-expanded="true"] .mfa-brands__icon-v {
+  transform: scaleY(0);
+  opacity: 0;
+}
+
+/* ---- shared control-bar icon (arrows, view-all) ---- */
+
+.mfa-brands__icon {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  opacity: 0.85;
+}
+
+/* ---- bottom control bar ---- */
+
+.mfa-brands__bar {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  width: min(var(--mfa-brands-panel), 100%);
+}
+
+.mfa-brands__rail {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  border: 1px solid var(--mfa-brands-line);
+  border-radius: var(--mfa-brands-radius-sm);
+  background: var(--mfa-brands-glass);
+  backdrop-filter: blur(var(--mfa-brands-blur)) saturate(1.35);
+  -webkit-backdrop-filter: blur(var(--mfa-brands-blur)) saturate(1.35);
+  overflow: hidden;
+}
+
+.mfa-brands__seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  font-family: var(--mfa-brands-mono);
+  font-size: 11px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--mfa-brands-ink-soft);
+  white-space: nowrap;
+}
+
+.mfa-brands__seg + .mfa-brands__seg {
+  border-left: 1px solid var(--mfa-brands-line);
+}
+
+.mfa-brands__seg--all {
+  border: 0;
+  background: none;
+  color: var(--mfa-brands-ink);
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.mfa-brands__seg--all:hover {
+  background: var(--mfa-brands-glass-hi);
+}
+
+/* the leading glyph crossfades from the list icon to an × while open */
+.mfa-brands__seg-ico {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+}
+
+.mfa-brands__seg-ico .mfa-brands__icon {
+  grid-area: 1 / 1;
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease;
+}
+
+.mfa-brands__ico-close {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.6);
+}
+
+.mfa-brands__seg--all[aria-expanded="true"] .mfa-brands__ico-list {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.6);
+}
+
+.mfa-brands__seg--all[aria-expanded="true"] .mfa-brands__ico-close {
+  opacity: 1;
+  transform: none;
+}
+
+.mfa-brands__seg--name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--mfa-brands-ink);
+}
+
+.mfa-brands__seg--name > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  will-change: transform, opacity;
+}
+
+.mfa-brands__seg--count {
+  gap: 6px;
+  margin-left: auto;
+  color: var(--mfa-brands-ink);
+}
+
+/* fixed-size window so the rolling digit never nudges the layout */
+.mfa-brands__odometer {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 2ch;
+  height: 14px;
+  line-height: 14px;
+}
+
+.mfa-brands__odometer > span {
+  display: block;
+  will-change: transform, opacity;
+}
+
+.mfa-brands__slash {
+  color: var(--mfa-brands-ink-mute);
+}
+
+.mfa-brands__nav {
+  display: flex;
+  gap: 8px;
+  flex: none;
+}
+
+.mfa-brands__arrow {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--mfa-brands-line);
+  border-radius: var(--mfa-brands-radius-sm);
+  background: var(--mfa-brands-glass);
+  backdrop-filter: blur(var(--mfa-brands-blur)) saturate(1.35);
+  -webkit-backdrop-filter: blur(var(--mfa-brands-blur)) saturate(1.35);
+  color: var(--mfa-brands-ink);
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.mfa-brands__arrow:hover {
+  background: var(--mfa-brands-btn-hover);
+  border-color: var(--mfa-brands-btn-hover);
+  color: var(--mfa-brands-btn-hover-ink);
+}
+
+.mfa-brands__arrow:active {
+  transform: scale(0.95);
+}
+
+/* the arrow icon stays put on hover — only the background changes */
+.mfa-brands__arrow-loop {
+  position: relative;
+  width: 17px;
+  height: 17px;
+  overflow: hidden; /* keep the duplicate glyph clipped out of view */
+}
+
+.mfa-brands__arrow-loop svg {
+  position: absolute;
+  left: 0;
+  width: 17px;
+  height: 17px;
+  opacity: 0.9;
+}
+
+.mfa-brands__arrow-loop svg:nth-child(1) {
+  top: 0;
+}
+
+.mfa-brands__arrow-loop svg:nth-child(2) {
+  top: 100%; /* parked below the window, never shown */
+}
+
+/* --------------------------------------------------------------------------
+   "View All" list
+   -------------------------------------------------------------------------- */
+
+/* full-bleed blurred panel that sits BEHIND the control bar (which stays live
+   and toggles View All -> Close) and in front of the photo. The info card is
+   hidden while it is open — see .mfa-is-listing below. */
+.mfa-brands__sheet {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: calc(var(--mfa-brands-pad) + 6px) var(--mfa-brands-pad)
+    calc(var(--mfa-brands-pad) + 52px);
+  background: rgba(8, 8, 10, 0.58);
+  backdrop-filter: blur(28px) saturate(1.15);
+  -webkit-backdrop-filter: blur(28px) saturate(1.15);
+}
+
+.mfa-brands__sheet[hidden] {
+  display: none;
+}
+
+.mfa-brands__list {
+  width: min(var(--mfa-brands-panel), 100%);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 6px;
+  /* soften where rows scroll under the top/bottom edges */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 20px,
+    #000 calc(100% - 20px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 20px,
+    #000 calc(100% - 20px),
+    transparent 100%
+  );
+}
+
+.mfa-brands__row {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 26px);
+  width: 100%;
+  padding: 8px 22px 8px 8px;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  color: var(--mfa-brands-ink);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+.mfa-brands__row + .mfa-brands__row {
+  margin-top: 2px;
+}
+
+.mfa-brands__row:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mfa-brands__row-thumb {
+  flex: none;
+  width: clamp(96px, 12vw, 148px);
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mfa-brands__row-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mfa-brands__row:hover .mfa-brands__row-thumb img {
+  transform: scale(1.06);
+}
+
+.mfa-brands__row-name {
+  min-width: 0;
+  font-family: var(--mfa-brands-display);
+  font-size: clamp(21px, 2.5vw, 31px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* active brand — solid off-white row with dark text */
+.mfa-brands__row.mfa-is-active {
+  background: var(--mfa-brands-ink);
+  color: #14110f;
+}
+
+.mfa-brands__row.mfa-is-active:hover {
+  background: var(--mfa-brands-ink);
+}
+
+/* while the list is open, drop the info card so the blur reads cleanly */
+.mfa-brands.mfa-is-listing .mfa-brands__card {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    visibility 0s linear 0.25s;
+}
+
+/* --------------------------------------------------------------------------
+   Focus + responsive + motion preferences
+   -------------------------------------------------------------------------- */
+
+.mfa-brands :focus-visible {
+  outline: 2px solid var(--mfa-brands-accent);
+  outline-offset: 3px;
+}
+
+/* tablets and down: logo cell moves above the copy */
+@media (max-width: 760px) {
+  .mfa-brands {
+    --mfa-brands-pad: 14px;
+    height: 100svh;
+    min-height: 560px;
+  }
+
+  .mfa-brands__card {
+    grid-template-columns: 1fr;
+  }
+
+  .mfa-brands__mark {
+    justify-content: flex-start;
+    place-items: center start;
+    padding: 15px 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--mfa-brands-line);
+  }
+
+  .mfa-brands__wordmark {
+    font-size: 17px;
+  }
+
+  .mfa-brands__body {
+    gap: 14px;
+    padding: 16px 20px 18px;
+  }
+
+  .mfa-brands__tags {
+    justify-content: flex-start;
+    gap: 6px 16px;
+    font-size: 10px;
+  }
+
+  .mfa-brands__btn {
+    height: 40px;
+    font-size: 13px;
+  }
+
+  /* the rail is tight on phones — keep the View All icon + counter, drop the
+     View All label and the brand name */
+  .mfa-brands__seg--all [data-mfa="viewall-label"],
+  .mfa-brands__seg--name {
+    display: none;
+  }
+
+  .mfa-brands__seg--all {
+    padding: 0 16px;
+  }
+
+  .mfa-brands__row {
+    gap: 16px;
+    padding: 6px 14px 6px 6px;
+  }
+}
+
+/* short landscape windows: drop the collapsible copy out of the way */
+@media (max-height: 520px) {
+  .mfa-brands__about {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mfa-brands__btn,
+  .mfa-brands__btn-ico,
+  .mfa-brands__btn-txt,
+  .mfa-brands__icon-v,
+  .mfa-brands__seg-ico .mfa-brands__icon,
+  .mfa-brands__row-thumb img,
+  .mfa-brands__arrow {
+    transition-duration: 0.01ms;
+  }
+
+  /* hide the info card immediately (no fade) when the list opens */
+  .mfa-brands.mfa-is-listing .mfa-brands__card {
+    transition: opacity 0.01ms;
+  }
+}

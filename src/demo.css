@@ -1,0 +1,22 @@
+/* ==========================================================================
+   DEMO PAGE ONLY — do NOT copy this file into your project
+   --------------------------------------------------------------------------
+   The showcase page shell: base page reset so the full-bleed brand slider
+   sits flush in the viewport. The component itself is styled entirely in
+   style.css and carries its own scoped tokens.
+   ========================================================================== */
+
+body {
+  margin: 0;
+  color-scheme: dark;
+  background: #0a0a0b;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#mfa-app {
+  width: 100%;
+  margin: 0 auto;
+}
